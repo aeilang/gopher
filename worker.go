@@ -53,7 +53,10 @@ func (w *Worker) WriteToFile(badCsv, goodCsv *csv.Writer, n int) {
 			goodCsv.Write(row)
 
 			finished++
-			fmt.Printf("已完成: %.3f\n", float64(finished)/float64(n))
+
+			if finished%10 == 0 {
+				fmt.Printf("已完成: %.3f\n", float64(finished)/float64(n))
+			}
 
 		case row, ok := <-w.badCh:
 			if !ok {
@@ -63,7 +66,9 @@ func (w *Worker) WriteToFile(badCsv, goodCsv *csv.Writer, n int) {
 			badCsv.Write(row)
 
 			finished++
-			fmt.Printf("已完成: %.3f\n", float64(finished)/float64(n))
+			if finished%10 == 0 {
+				fmt.Printf("已完成: %.3f\n", float64(finished)/float64(n))
+			}
 		}
 	}
 }
